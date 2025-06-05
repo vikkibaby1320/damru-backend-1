@@ -26,13 +26,13 @@ const app = express();
 // Middleware for parsing JSON
 app.use(express.json());
 
-// Configure CORS for frontend communication
+// ✅ UPDATED CORS URLs
 const allowedOrigins = [
-  process.env.FRONTEND_URL?.trim() ||
-    "https://consumer-new.vercel.app",
-    "https://admin-new-black.vercel.app",
-    "http://localhost:5173",
-    "http://localhost:5174",
+  process.env.FRONTEND_URL?.trim() || "https://damru-consumer-1.onrender.com",
+  "https://damru-admin-1.onrender.com",
+  "https://damru-consumer-1.onrender.com",
+  "http://localhost:5173",
+  "http://localhost:5174",
 ];
 
 const corsOptions = {
@@ -55,7 +55,7 @@ app.use("/api/markets", marketRoutes);
 app.use("/api/wallet", walletRoutes);
 app.use("/api/bets", betRoutes);
 app.use("/api/wins", winRoutes);
-app.use('/api/admin', adminAuthRoutes);
+app.use("/api/admin", adminAuthRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/users", userRoutes);
 
