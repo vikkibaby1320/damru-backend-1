@@ -26,10 +26,16 @@ const app = express();
 // Middleware for parsing JSON
 app.use(express.json());
 
-// Configure CORS for frontend communication
+// ✅ UPDATED CORS URLs
 const allowedOrigins = [
+<<<<<<< HEAD
   "https://damru-consumer-1.onrender.com",
   "https://damru-admin-1.onrender.com",
+=======
+  process.env.FRONTEND_URL?.trim() || "https://damru-consumer-1.onrender.com",
+  "https://damru-admin-1.onrender.com",
+  "https://damru-consumer-1.onrender.com",
+>>>>>>> 77292db106727663022ac4e4cbfe3e87bc576360
   "http://localhost:5173",
   "http://localhost:5174",
 ];
