@@ -43,20 +43,20 @@ const corsOptions = {
       callback(new Error("Not allowed by CORS"));
     }
   },
-  methods: ["GET", "POST", "PUT", "DELETE"], // Restrict to necessary methods
-  allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
 
 app.use(cors(corsOptions));
 
 // Mount routes
-app.use("/api/auth", authRoutes); // Auth routes
-app.use("/api/markets", marketRoutes); // Market routes
-app.use("/api/wallet", walletRoutes); // Wallet routes
-app.use("/api/bets", betRoutes); // Bets routes
-app.use("/api/wins", winRoutes); // Wins routes
-app.use('/api/admin', adminAuthRoutes); //Admin Auth routes
-app.use("/api/admin", adminRoutes); //Admin routes
+app.use("/api/auth", authRoutes);
+app.use("/api/markets", marketRoutes);
+app.use("/api/wallet", walletRoutes);
+app.use("/api/bets", betRoutes);
+app.use("/api/wins", winRoutes);
+app.use('/api/admin', adminAuthRoutes);
+app.use("/api/admin", adminRoutes);
 app.use("/api/users", userRoutes);
 
 // Test API route
@@ -76,8 +76,32 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-// Start the cron job to manage market timings
+// Start the cron job
 scheduleMarketTasks();
 
-// Export the app for Vercel
+// Export for Vercel
 export default app;
+
+// ✅ Auto-create default admin on DB start
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
+import Admin from "./models/Admin.js";
+
+mongoose.connection.once("open", async () => {
+  try {
+    const existingAdmin = await Admin.findOne({ username: "admin" });
+
+    if (!existingAdmin) {
+      const hashedPassword = await bcrypt.hash("admin123", 10);
+      await Admin.create({
+        username: "admin",
+        password: hashedPassword,
+      });
+      console.log("✅ Admin created: username 'admin' / password 'admin123'");
+    } else {
+      console.log("ℹ️ Admin already exists");
+    }
+  } catch (err) {
+    console.error("❌ Error creating admin:", err);
+  }
+});
