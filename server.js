@@ -28,11 +28,10 @@ app.use(express.json());
 
 // Configure CORS for frontend communication
 const allowedOrigins = [
-  process.env.FRONTEND_URL?.trim() ||
-    "https://consumer-new.vercel.app",
-    "https://admin-new-black.vercel.app",
-    "http://localhost:5173",
-    "http://localhost:5174",
+  "https://damru-consumer-1.onrender.com",
+  "https://damru-admin-1.onrender.com",
+  "http://localhost:5173",
+  "http://localhost:5174",
 ];
 
 const corsOptions = {
@@ -55,7 +54,7 @@ app.use("/api/markets", marketRoutes);
 app.use("/api/wallet", walletRoutes);
 app.use("/api/bets", betRoutes);
 app.use("/api/wins", winRoutes);
-app.use('/api/admin', adminAuthRoutes);
+app.use("/api/admin", adminAuthRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/users", userRoutes);
 
@@ -70,17 +69,14 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Server error!" });
 });
 
-// Start the server
-const PORT = process.env.PORT || 5000;
+// Start the server on port 10000
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
 // Start the cron job
 scheduleMarketTasks();
-
-// Export for Vercel
-export default app;
 
 // ✅ Auto-create default admin on DB start
 import mongoose from "mongoose";
