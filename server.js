@@ -28,8 +28,8 @@ app.use(express.json());
 
 // Configure CORS for frontend communication
 const allowedOrigins = [
-  "https://damru-consumer-1.onrender.com",
-  "https://damru-admin-1.onrender.com",
+  "https://damru-consumer-1.vercel.app",
+  "https://damru-admin-1.vercel.app",
   "http://localhost:5173",
   "http://localhost:5174",
 ];
