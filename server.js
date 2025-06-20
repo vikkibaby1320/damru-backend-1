@@ -85,7 +85,7 @@ import Admin from "./models/Admin.js";
 
 mongoose.connection.once("open", async () => {
   try {
-    const existingAdmin = await Admin.findOne({ username: "admin" });
+    const existingAdmin = await Admin.findOne({ username: "admin@example.com" });
 
     if (!existingAdmin) {
       const hashedPassword = await bcrypt.hash("admin123", 10);
